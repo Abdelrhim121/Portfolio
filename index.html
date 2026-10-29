@@ -259,7 +259,7 @@
         </div>
     </footer>
 
-    <script>
+ <!--   <script>
     
 
         function extractYoutubeId(url) {
@@ -333,6 +333,188 @@
         }
 
         renderProjects();
-    </script>
+    </script> -->
+    
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDi89v5QIBiaNGDBKGq5iuOVCx2JfpVVwM",
+    authDomain: "portfolio-5a8d2.firebaseapp.com",
+    projectId: "portfolio-5a8d2",
+    storageBucket: "portfolio-5a8d2.firebasestorage.app",
+    messagingSenderId: "265800022287",
+    appId: "1:265800022287:web:ad94347a94fc51163ae67a",
+    measurementId: "G-B1Y36LR146"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const projectsRef = db.collection("projects");
+
+  let projects = [];
+  let activeFilter = "all";
+
+  function extractYoutubeId(url = "") {
+    try {
+      const parsed = new URL(url);
+      let id = "";
+
+      if (parsed.hostname.includes("youtu.be")) {
+        id = parsed.pathname.split("/").filter(Boolean)[0] || "";
+      } else if (parsed.hostname.endsWith("youtube.com")) {
+        id = parsed.searchParams.get("v") || "";
+        if (!id) {
+          const parts = parsed.pathname.split("/").filter(Boolean);
+          if (["embed", "shorts", "live"].includes(parts[0])) {
+            id = parts[1] || "";
+          }
+        }
+      }
+
+      return /^[\w-]{11}$/.test(id) ? id : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function safeText(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function renderProjects(filterCategory = activeFilter) {
+    activeFilter = filterCategory;
+    const grid = document.getElementById("projects-grid");
+    grid.innerHTML = "";
+
+    const filtered = filterCategory === "all"
+      ? projects
+      : projects.filter(p => p.category === filterCategory);
+
+    if (!filtered.length) {
+      grid.innerHTML = `
+        <p class="col-span-full text-center text-gray-400 py-10">
+          لا توجد مشاريع منشورة حاليًا.
+        </p>`;
+      return;
+    }
+
+    filtered.forEach(proj => {
+      const url = String(proj.youtubeUrl || "");
+      const title = safeText(proj.title || "مشروع");
+      const desc = safeText(proj.desc || "");
+      const ytid = extractYoutubeId(url);
+      const thumb = proj.thumb || (
+        ytid ? `https://img.youtube.com/vi/${ytid}/hqdefault.jpg` : ""
+      );
+
+      const card = document.createElement("div");
+      card.className =
+        "glass-panel rounded-2xl overflow-hidden border border-white/10 group hover:border-gold-500/40 transition-all duration-300 flex flex-col";
+
+      card.innerHTML = `
+        <div class="relative aspect-video overflow-hidden ${
+          ytid ? "cursor-pointer" : ""
+        }" ${ytid ? `data-video="${safeText(url)}"` : ""}>
+          <img src="${safeText(thumb)}" alt="${title}"
+               loading="lazy"
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <div class="w-14 h-14 rounded-full bg-yellow-500/90 text-black flex items-center justify-center text-xl">
+              <i class="fa-solid fa-play"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 flex-1">
+          <h3 class="text-xl font-bold text-white mb-2">${title}</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">${desc}</p>
+          ${
+            ytid
+              ? `<button type="button" data-video="${safeText(url)}"
+                   class="text-yellow-400 text-sm font-bold hover:underline">
+                   مشاهدة العمل ←
+                 </button>`
+              : ""
+          }
+        </div>`;
+
+      grid.appendChild(card);
+    });
+
+    grid.querySelectorAll("[data-video]").forEach(element => {
+      element.addEventListener("click", () => {
+        openVideoModal(element.dataset.video);
+      });
+    });
+  }
+
+  function filterProjects(category, btn) {
+    document.querySelectorAll(".filter-btn").forEach(button => {
+      button.classList.remove("active", "text-gold-400", "border-gold-500/50");
+      button.classList.add("text-gray-400");
+    });
+
+    if (btn) {
+      btn.classList.add("active", "text-gold-400", "border-gold-500/50");
+      btn.classList.remove("text-gray-400");
+    }
+
+    renderProjects(category);
+  }
+
+  function openVideoModal(url) {
+    const ytid = extractYoutubeId(url);
+    if (!ytid) return;
+
+    const container = document.getElementById("modal-video-container");
+    container.innerHTML = "";
+
+    const iframe = document.createElement("iframe");
+    iframe.className = "w-full h-full";
+    iframe.src = `https://www.youtube.com/embed/${ytid}?autoplay=1`;
+    iframe.title = "مشاهدة المشروع";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+
+    container.appendChild(iframe);
+
+    document.getElementById("video-modal").classList.remove("hidden");
+    document.getElementById("video-modal").classList.add("flex");
+  }
+
+  function closeVideoModal() {
+    document.getElementById("modal-video-container").innerHTML = "";
+    document.getElementById("video-modal").classList.add("hidden");
+    document.getElementById("video-modal").classList.remove("flex");
+  }
+
+  projectsRef.onSnapshot(snapshot => {
+    projects = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    projects.sort((a, b) =>
+      (b.createdAt || 0) - (a.createdAt || 0)
+    );
+
+    renderProjects();
+  }, error => {
+    console.error("خطأ في تحميل المشاريع:", error);
+    document.getElementById("projects-grid").innerHTML = `
+      <p class="col-span-full text-center text-red-400 py-10">
+        تعذر تحميل المشاريع. تحقق من إعدادات Firebase وقواعد الوصول.
+      </p>`;
+  });
+</script>
+
 </body>
 </html>
