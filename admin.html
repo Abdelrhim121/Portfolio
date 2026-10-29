@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <script>
+<!--    <script>
      
 
         function unlockAdmin() {
@@ -135,6 +135,183 @@
                 renderAdminList();
             }
         }
-    </script>
+    </script> -->
+    
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDi89v5QIBiaNGDBKGq5iuOVCx2JfpVVwM",
+    authDomain: "portfolio-5a8d2.firebaseapp.com",
+    projectId: "portfolio-5a8d2",
+    storageBucket: "portfolio-5a8d2.firebasestorage.app",
+    messagingSenderId: "265800022287",
+    appId: "1:265800022287:web:ad94347a94fc51163ae67a",
+    measurementId: "G-B1Y36LR146"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const projectsRef = db.collection("projects");
+
+  let projects = [];
+  let unsubscribeProjects = null;
+
+  function safeText(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function unlockAdmin() {
+    const pass = document.getElementById("admin-pass").value;
+
+    if (pass !== "1234") {
+      alert("كلمة المرور غير صحيحة!");
+      return;
+    }
+
+    document.getElementById("admin-login-step").classList.add("hidden");
+    document.getElementById("admin-content-step").classList.remove("hidden");
+
+    renderAdminList();
+  }
+
+  function renderAdminList() {
+    const list = document.getElementById("admin-projects-list");
+
+    if (unsubscribeProjects) unsubscribeProjects();
+
+    list.innerHTML = '<p class="text-gray-400">جارٍ تحميل المشاريع...</p>';
+
+    unsubscribeProjects = projectsRef.onSnapshot(snapshot => {
+      projects = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      projects.sort((a, b) =>
+        (b.createdAt || 0) - (a.createdAt || 0)
+      );
+
+      list.innerHTML = "";
+
+      if (!projects.length) {
+        list.innerHTML =
+          '<p class="text-gray-400 text-sm">لا توجد مشاريع محفوظة بعد.</p>';
+        return;
+      }
+
+      projects.forEach(project => {
+        const item = document.createElement("div");
+        item.className =
+          "flex items-center justify-between gap-3 p-3 rounded-xl bg-gray-900 border border-gray-800 text-sm";
+
+        item.innerHTML = `
+          <div class="font-semibold text-white break-words">
+            ${safeText(project.title || "مشروع بدون عنوان")}
+          </div>
+          <button type="button"
+            class="text-red-400 hover:text-red-300 p-2"
+            data-delete-id="${safeText(project.id)}">
+            <i class="fa-solid fa-trash"></i>
+            <span>حذف</span>
+          </button>`;
+
+        list.appendChild(item);
+      });
+
+      list.querySelectorAll("[data-delete-id]").forEach(button => {
+        button.addEventListener("click", () => {
+          deleteProject(button.dataset.deleteId);
+        });
+      });
+    }, error => {
+      console.error("خطأ في تحميل قائمة المشاريع:", error);
+      list.innerHTML =
+        '<p class="text-red-400">تعذر تحميل المشاريع. تحقق من قواعد Firestore.</p>';
+    });
+  }
+
+  document.getElementById("add-project-form")
+    .addEventListener("submit", handleSaveProject);
+
+  async function handleSaveProject(event) {
+    event.preventDefault();
+
+    const form = document.getElementById("add-project-form");
+    const submitButton = form.querySelector('[type="submit"]');
+
+    const title = document.getElementById("proj-title").value.trim();
+    const youtubeUrl = document.getElementById("proj-url").value.trim();
+    const thumb = document.getElementById("proj-thumb").value.trim();
+    const desc = document.getElementById("proj-desc").value.trim();
+
+    if (!title || !youtubeUrl || !desc) {
+      alert("يرجى تعبئة العنوان ورابط الفيديو والوصف.");
+      return;
+    }
+
+    try {
+      new URL(youtubeUrl);
+      if (!["youtube.com", "www.youtube.com", "youtu.be", "m.youtube.com", "youtube-nocookie.com", "www.youtube-nocookie.com"].includes(new URL(youtubeUrl).hostname)) {
+        alert("يرجى إدخال رابط YouTube صحيح.");
+        return;
+      }
+    } catch {
+      alert("رابط الفيديو غير صحيح.");
+      return;
+    }
+
+    if (thumb) {
+      try {
+        if (new URL(thumb).protocol !== "https:") throw new Error();
+      } catch {
+        alert("رابط الصورة يجب أن يكون رابط HTTPS صحيحًا.");
+        return;
+      }
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "جارٍ الحفظ...";
+
+    try {
+      await projectsRef.add({
+        title,
+        youtubeUrl,
+        thumb,
+        desc,
+        createdAt: Date.now()
+      });
+
+      form.reset();
+      alert("تم حفظ المشروع في Firebase بنجاح.");
+    } catch (error) {
+      console.error("خطأ في حفظ المشروع:", error);
+      alert("تعذر الحفظ. تحقق من قواعد Firestore والاتصال بالإنترنت.");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "حفظ ونشر المشروع";
+    }
+  }
+
+  async function deleteProject(id) {
+    if (!confirm("هل أنت متأكد من حذف هذا المشروع؟")) return;
+
+    try {
+      await projectsRef.doc(id).delete();
+      alert("تم حذف المشروع.");
+    } catch (error) {
+      console.error("خطأ في حذف المشروع:", error);
+      alert("تعذر حذف المشروع. تحقق من قواعد Firestore.");
+    }
+  }
+</script>
+
 </body>
 </html>
