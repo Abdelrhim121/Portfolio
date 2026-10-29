@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عبدالرحيم برير | محرر فيديو تلفزيوني</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { 400: '#facc15', 500: '#eab308', 600: '#ca8a04' },
+                        darkBg: '#0b0f17',
+                        cardBg: '#131b2e',
+                        borderBg: '#1f293d'
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #0b0f17; color: #e2e8f0; }
+        .glass-panel { background: rgba(19, 27, 46, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gold-gradient-text { background: linear-gradient(135deg, #FFF 0%, #facc15 50%, #ca8a04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gold-button { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #000; font-weight: bold; }
+        .gold-button:hover { background: linear-gradient(135deg, #facc15 0%, #eab308 100%); box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b0f17; }
+        ::-webkit-scrollbar-thumb { background: #1f293d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ca8a04; }
+    </style>
+</head>
+<body class="selection:bg-gold-500 selection:text-black">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 w-full z-40 glass-panel border-b border-white/10 px-6 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/40 flex items-center justify-center text-gold-400 font-bold text-xl">
+                    <i class="fa-solid fa-clapperboard"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-xl tracking-wide text-white">عبدالرحيم برير</span>
+                    <span class="text-xs text-gold-400 font-medium">محرر فيديو تلفزيوني</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <a href="#hero" class="hover:text-gold-400 transition-colors">الرئيسية</a>
+                <a href="#portfolio" class="hover:text-gold-400 transition-colors">معرض الأعمال</a>
+                <a href="#skills" class="hover:text-gold-400 transition-colors">المهارات والتقنيات</a>
+                <a href="#contact" class="hover:text-gold-400 transition-colors">تواصل معي</a>
+            </nav>
+
+            <a href="https://wa.me/966567906733" target="_blank" class="gold-button px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-all transform hover:scale-105">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>تواصل عبر الواتساب</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen pt-32 pb-20 px-6 flex items-center justify-center relative overflow-hidden">
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-gold-500/10 rounded-full filter blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full filter blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-gold-400 text-sm mb-8 border border-gold-500/20">
+                <span class="w-2 h-2 rounded-full bg-gold-400 animate-pulse"></span>
+                متاح للعمل على البرامج والمشاريع التلفزيونية
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 leading-tight">
+                عبدالرحيم برير
+            </h1>
+            <p class="text-2xl md:text-4xl font-bold gold-gradient-text mb-8">
+                سرد بصري متقن للقصص التلفزيونية
+            </p>
+
+            <p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed">
+                محرر فيديو تلفزيوني متخصص في بناء الإيقاع الدرامي والخبري، صياغة المونتاج التلفزيوني والوثائقي، هندسة الصوت البصري والتلوين الاحترافي لجعل كل مشهد يحكي قصته باحترافية.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-5">
+                <a href="#portfolio" class="gold-button px-8 py-4 rounded-xl text-lg font-bold flex items-center gap-3 transition-all transform hover:-translate-y-1">
+                    <i class="fa-solid fa-play"></i>
+                    <span>استعرض الأعمال المختارة</span>
+                </a>
+                <a href="https://wa.me/966567906733" target="_blank" class="glass-panel px-8 py-4 rounded-xl text-lg font-bold text-white hover:border-gold-500/50 transition-all flex items-center gap-3">
+                    <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+                    <span>تواصل مباشر</span>
+                </a>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20">
+                <div class="glass-panel p-6 rounded-2xl text-center border border-white/5">
+                    <div class="text-4xl font-black text-gold-400 mb-2">+5</div>
+                    <div class="text-sm text-gray-400">سنوات خبرة تلفزيونية</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl text-center border border-white/5">
+                    <div class="text-4xl font-black text-gold-400 mb-2">+500</div>
+                    <div class="text-sm text-gray-400">حلقة وبرنامج تلفزيوني</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl text-center border border-white/5">
+                    <div class="text-4xl font-black text-gold-400 mb-2">+100</div>
+                    <div class="text-sm text-gray-400">تقرير وبث مباشر</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl text-center border border-white/5">
+                    <div class="text-4xl font-black text-gold-400 mb-2">100%</div>
+                    <div class="text-sm text-gray-400">التزام بالجودة والمواعيد</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 px-6 relative bg-black/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">معرض الأعمال المختارة</h2>
+                <p class="text-gray-400 text-lg">مجموعة ممتازة من الأعمال البرامجية، الوثائقية، والتقارير التلفزيونية</p>
+                
+                <!-- Category Filters -->
+                <div id="category-filters" class="flex flex-wrap items-center justify-center gap-3 mt-8">
+                    <button class="filter-btn active px-6 py-2.5 rounded-full text-sm font-semibold glass-panel text-gold-400 border-gold-500/50" onclick="filterProjects('all', this)">الكل</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold glass-panel text-gray-400 hover:text-white" onclick="filterProjects('برامج تلفزيونية', this)">برامج تلفزيونية</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold glass-panel text-gray-400 hover:text-white" onclick="filterProjects('وثائقيات', this)">وثائقيات</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold glass-panel text-gray-400 hover:text-white" onclick="filterProjects('تقارير وتغطيات', this)">تقارير وتغطيات</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Skills & Tools -->
+    <section id="skills" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">البرامج والخبرات التقنية</h2>
+                <p class="text-gray-400">البيئة البرمجية والحلول الإبداعية المستخدمة لإخراج العمل التلفزيوني</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-xl font-bold text-gold-400 mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-laptop-code"></i> برامج المونتاج والجرافيك الأساسية
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-bold">
+                                <span>Adobe Premiere Pro</span>
+                                <span class="text-gold-400">98%</span>
+                            </div>
+                            <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gold-500 h-full rounded-full" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-bold">
+                                <span>Adobe After Effects (Motion Graphics)</span>
+                                <span class="text-gold-400">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gold-500 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-bold">
+                                <span>Adobe Audition (Sound Design)</span>
+                                <span class="text-gold-400">92%</span>
+                            </div>
+                            <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gold-500 h-full rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-xl font-bold text-gold-400 mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-sliders"></i> التخصصات الإبداعية والتلفزيونية
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-400"></i>
+                            <span>المونتاج البرامجي السريع والالتزام بجدول البث التلفزيوني</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-400"></i>
+                            <span>التلوين وتصحيح الألوان الرقمي (Color Grading)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-400"></i>
+                            <span>الهندسة الصوتية والتنقية والمكساج للتلفزيون (Audio Mixing)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-400"></i>
+                            <span>إعداد القوالب الجرافيكية وتيارات البث والمقدمات (Intros & Outros)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-black/50">
+        <div class="max-w-4xl mx-auto glass-panel p-10 md:p-14 rounded-3xl border border-gold-500/20 text-center">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">هل لديك مشروع أو برنامج تلفزيوني قادم؟</h2>
+            <p class="text-gray-300 text-lg mb-8">دعنا نعمل معاً لصناعة محتوى بصري احترافي يناسب قناتك أو منصتك الرقمية.</p>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-10">
+                <a href="https://wa.me/966567906733" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-all w-full md:w-auto px-8 justify-center">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    <div class="text-right">
+                        <div class="text-xs text-gray-400">واتساب مباشر</div>
+                        <div class="font-bold dir-ltr">+966 56 790 6733</div>
+                    </div>
+                </a>
+
+                <a href="mailto:abdelrhim121@gmail.com" class="flex items-center gap-4 p-4 rounded-xl bg-gold-500/10 border border-gold-500/30 text-gold-400 hover:bg-gold-500/20 transition-all w-full md:w-auto px-8 justify-center">
+                    <i class="fa-solid fa-envelope text-2xl"></i>
+                    <div class="text-right">
+                        <div class="text-xs text-gray-400">البريد الإلكتروني</div>
+                        <div class="font-bold">abdelrhim121@gmail.com</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 hidden items-center justify-center p-4">
+        <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
+            <button onclick="closeVideoModal()" class="absolute top-4 left-4 z-10 w-10 h-10 rounded-full bg-black/60 text-white hover:bg-gold-500 hover:text-black flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div id="modal-video-container" class="w-full h-full"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-white/10 text-center text-gray-500 text-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>© 2026 عبدالرحيم برير - جميع الحقوق محفوظة</div>
+            <div>محرر فيديو تلفزيوني</div>
+        </div>
+    </footer>
+
+    <script>
+        const initialProjects = [
+            { id: '1', title: 'برنامج تلفزيوني - الحلقة 5', category: 'برامج تلفزيونية', youtubeUrl: 'https://www.youtube.com/watch?v=try3k6tQae0', desc: 'إعداد ومونتاج الحلقة الخامسة مع الضيوف وتنسيق الإيقاع البصري الصوتي.' },
+            { id: '2', title: 'تغطية تلفزيونية خاصة', category: 'تقارير وتغطيات', youtubeUrl: 'https://www.youtube.com/watch?v=U8Yl68FY8F8', desc: 'مونتاج سريع لتغطية ميدانية وإعادة صياغة القصص الميدانية.' },
+            { id: '3', title: 'وثائقي تلفزيوني سينمائي', category: 'وثائقيات', youtubeUrl: 'https://www.youtube.com/watch?v=3PzKYWdcfZ8', desc: 'تلوين وهندسة صوت ومونتاج وثائقي متكامل بسرد درامي ممتاز.' },
+            { id: '4', title: 'تقرير تلفزيوني إخباري', category: 'تقارير وتغطيات', youtubeUrl: 'https://www.youtube.com/watch?v=VPNE_oyzAyQ', desc: 'صياغة الخبر وتنسيق المشاهد بسرعة للتوافق مع جدول البث الإخباري.' },
+            { id: '5', title: 'برنامج حواري تلفزيوني', category: 'برامج تلفزيونية', youtubeUrl: 'https://www.youtube.com/watch?v=QDPnt16DStw', desc: 'مونتاج كاميرات متعددة (Multi-cam) مع إضافة المؤثرات والباقات الجرافيكية.' },
+            { id: '6', title: 'سلسلة تلفزيونية وثائقية', category: 'وثائقيات', youtubeUrl: 'https://www.youtube.com/watch?v=kXncSE29ZIw', desc: 'سلسلة مخصصة للبث التلفزيوني تبرز جودة التفاصيل البصرية.' }
+        ];
+
+        let projects = JSON.parse(localStorage.getItem('abdelrhim_projects')) || initialProjects;
+
+        function extractYoutubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function renderProjects(filterCategory = 'all') {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+
+            const filtered = filterCategory === 'all' 
+                ? projects 
+                : projects.filter(p => p.category === filterCategory);
+
+            filtered.forEach(proj => {
+                const ytid = extractYoutubeId(proj.youtubeUrl);
+                const thumb = proj.thumb || (ytid ? `https://img.youtube.com/vi/${ytid}/hqdefault.jpg` : '');
+
+                const card = document.createElement('div');
+                card.className = 'glass-panel rounded-2xl overflow-hidden border border-white/10 group hover:border-gold-500/40 transition-all duration-300 flex flex-col';
+                card.innerHTML = `
+                    <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openVideoModal('${proj.youtubeUrl}')">
+                        <img src="${thumb}" alt="${proj.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                            <div class="w-14 h-14 rounded-full bg-gold-500/90 text-black flex items-center justify-center text-xl font-bold shadow-lg transform group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-gold-400 text-xs px-3 py-1 rounded-full font-semibold border border-white/10">
+                            ${proj.category}
+                        </span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">${proj.title}</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">${proj.desc || ''}</p>
+                        </div>
+                        <button onclick="openVideoModal('${proj.youtubeUrl}')" class="text-gold-400 text-sm font-bold flex items-center gap-2 hover:underline">
+                            <span>مشاهدة العمل</span>
+                            <i class="fa-solid fa-arrow-left text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterProjects(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active', 'text-gold-400', 'border-gold-500/50');
+                b.classList.add('text-gray-400');
+            });
+            btn.classList.add('active', 'text-gold-400', 'border-gold-500/50');
+            btn.classList.remove('text-gray-400');
+            renderProjects(cat);
+        }
+
+        function openVideoModal(url) {
+            const ytid = extractYoutubeId(url);
+            if (!ytid) return;
+            const container = document.getElementById('modal-video-container');
+            container.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${ytid}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            document.getElementById('video-modal').classList.remove('hidden');
+            document.getElementById('video-modal').classList.add('flex');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('modal-video-container').innerHTML = '';
+            document.getElementById('video-modal').classList.add('hidden');
+            document.getElementById('video-modal').classList.remove('flex');
+        }
+
+        renderProjects();
+    </script>
+</body>
+</html>
